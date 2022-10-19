@@ -46,7 +46,7 @@ export default class App extends React.Component{
       .then(async res =>{
         try{
           let jsonRes = await res.json()
-          console.log(jsonRes)
+          // console.log(jsonRes)
           this.setState({isLogin:true})
           Alert.alert(`User ${jsonRes[0].userName} Found`)
 
