@@ -46,7 +46,7 @@ export default class App extends React.Component{
       .then(async res =>{
         try{
           let jsonRes = await res.json()
-          // console.log(jsonRes)
+          console.log(jsonRes)
           this.setState({isLogin:true})
           Alert.alert(`User ${jsonRes[0].userName} Found`)
 
@@ -67,14 +67,17 @@ export default class App extends React.Component{
         onChangeText={(username) => this.setState({username})}
         placeholder={'Username'}
         style={styles.input}
+        autoCorrect={false}
         
         />
 
       <TextInput
         value={this.state.password}
+        secureTextEntry
         onChangeText={(password) => this.setState({password})}
         placeholder={'Password'}
         style={styles.input}
+        autoCorrect={false}
         
         />
 
