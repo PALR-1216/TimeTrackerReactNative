@@ -1,6 +1,8 @@
 import { StatusBar } from 'expo-status-bar';
 import React from 'react';
 import { StyleSheet, Text, TextInput, View, Button , Alert} from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { setItem as setToken, removeItem as removeToken, getItem as getToken} from './storage';
 const API_URL = 'https://myworktimetracker.herokuapp.com'
 
 
@@ -10,7 +12,8 @@ export default class App extends React.Component{
     this.state = {
       username:'',
       password:'',
-      isLogin:false
+      isLogin:false,
+      userId:null
     }
   }
 
@@ -48,7 +51,12 @@ export default class App extends React.Component{
           let jsonRes = await res.json()
           console.log(jsonRes)
           this.setState({isLogin:true})
-          Alert.alert(`User ${jsonRes[0].userName} Found`)
+          // Alert.alert(`User ${jsonRes[0].userName} Found`)
+          // Alert.alert(`User id ${jsonRes[0].userId}`)
+          await setToken(jsonRes[0].userId)
+          this.setState({
+            userId:await getToken()
+          })
 
         }catch(error) {
           Alert.alert(`User was not found`)
