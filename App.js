@@ -2,33 +2,49 @@ import { StatusBar } from 'expo-status-bar';
 import React from 'react';
 import { StyleSheet, Text, TextInput, View, Button , Alert, SafeAreaView} from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { setItem as setToken, removeItem as removeToken, getItem as getToken} from './storage';
+// import { setItem as setToken, removeItem as removeToken, getItem as getToken} from './storage';
+import JWT from 'expo-jwt';
 
 const API_URL = 'https://myworktimetracker.herokuapp.com'
 
+
+async function getItems(Item) {
+  try {
+    const value = await AsyncStorage.getItem(Item)
+    if(value !== null ) {
+        return value ? JSON.parse(value) : null;
+    }
+
+}catch(e) {
+    console.log(e)
+}
+}
 
 
 export default class App extends React.Component{
   constructor(props) {
     super(props)
+
     this.state = {
-      username:'',
-      password:'',
-      isLogin:false,
-      userId:null
+      userId:null,
+      userName:null
     }
   }
 
- render() {
-  return(
-    <SafeAreaView style={styles.container}>
-      <LoginView/>
-    </SafeAreaView>
-  )
- }
 
+
+ render() {
+
+    return(
+      <SafeAreaView style={styles.container}>
+        <LoginView/>
+      </SafeAreaView>
+    )
+
+
+ 
   
-  
+    }
 }
 
 
@@ -47,15 +63,6 @@ class LoginView extends React.Component {
     }
   }
 
-  async storeData(data) {
-    try {
-      return AsyncStorage.setItem(data, JSON.stringify(data));
-      
-  } catch (e) {
-      console.log(e)
-      
-  }
-  }
  
 
 
@@ -92,50 +99,28 @@ class LoginView extends React.Component {
       .then(async res =>{
         try{
           let jsonRes = await res.json()
-          // console.log(jsonRes)
-          // this.setState({isLogin:true})
-          // Alert.alert(`User ${jsonRes[0].userName} Found`)
-          // Alert.alert(`User id ${jsonRes[0].userId}`)
-          await setToken(jsonRes[0].userId)
-          await this.storeData(jsonRes[0].userPassword)
+        console.log(jsonRes)
+        //store the variables
+
+          await setItem(jsonRes[0].userName)
+          await setItem(jsonRes[0].userId)
+          // await AsyncStorage.setItem('userPassword', JSON.stringify(jsonRes[0].user));
+          // let name = await AsyncStorage.getItem('userName')
           
-          let result = await getToken()
-          this.setState({
-            userId:result,
-            username:jsonRes[0].userName
-          })
           
 
         }catch(error) {
           Alert.alert(`User was not found`)
+         
         }
       })
     }
   }
 
-  async Logout() {
-    await removeToken('UserID')
-    Alert.alert("token removed")
-
-
-
-  }
-
 
   render() {
 
-    if(this.state.userId) {
-      return(
-        <View style={styles.container}>
-          <ShowUserData/>
-          
-          {/* <Text>hello {this.state.username}</Text>
-          <Text>{this.state.userId}</Text> */}
-        </View>
-      )
-    } 
 
-    else{
 
       return(
         <View style={styles.container}>
@@ -172,7 +157,7 @@ class LoginView extends React.Component {
         </View>
       )
 
-    }
+    
   }
 }
 
@@ -180,42 +165,34 @@ class LoginView extends React.Component {
 class ShowUserData extends React.Component {
    constructor(props) {
     super(props)
+    
+    
 
     this.state = {
       userId:null,
-      userPassword:null
+      userPassword:null,
+      userName:null
     
     }
   }
 
-  async storedData(data) {
-      try {
-        const value = await AsyncStorage.getItem(data)
-        if(value !== null ) {
-            return value ? JSON.parse(value) : null;
-        }
-
-    }catch(e) {
-        console.log(e)
-    }
-
-  }
 
   async checkIfUserExist() {
-    let result =  await this.storedData('UserID')
-    if(result) {
-      console.log(result)
-    }
-    else{
-      return null
-    }
+    console.log(await getItem('userId'))
+
+  
   }
 
   render() {
     this.checkIfUserExist()
     return(
       <View>
+        
         <Text>Home page</Text>
+        <Button 
+        title='LogOut' 
+        onPress={this.Logout}
+        />
         
       </View>
     )
@@ -242,3 +219,40 @@ const styles = StyleSheet.create({
 });
 
 
+
+
+
+
+async function setItem(item) {
+    try {
+      return AsyncStorage.setItem(`${item}`, JSON.stringify(item));
+      
+  } catch (e) {
+      console.log(e)
+      
+  }
+}
+
+
+async function getItem(item) {
+    try {
+      const value = await AsyncStorage.getItem(item)
+      if(value !== null ) {
+          return value ? JSON.parse(value) : null;
+      }
+
+  }catch(e) {
+      console.log(e)
+  }
+
+}
+
+
+async function removeItem(item) {
+  try{
+    await AsyncStorage.removeItem(item)
+
+  }catch(e) {
+    console.log(e)
+  }
+}
