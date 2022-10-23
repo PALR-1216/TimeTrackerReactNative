@@ -5,7 +5,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 // import { setItem as setToken, removeItem as removeToken, getItem as getToken} from './storage';
 import JWT from 'expo-jwt';
 import LoginView from './Screens/LoginView';
-import ShowUserData from './Screens/showUserData';
+import showUserData from './Screens/showUserData';
 
 const API_URL = 'https://myworktimetracker.herokuapp.com'
 
@@ -14,6 +14,7 @@ async function getItems(Item) {
   try {
     const value = await AsyncStorage.getItem(Item)
     if(value !== null ) {
+      console.log(value)
         return value ? JSON.parse(value) : null;
     }
 

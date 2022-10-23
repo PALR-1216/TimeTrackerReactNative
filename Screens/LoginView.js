@@ -2,7 +2,7 @@ import { StatusBar } from 'expo-status-bar';
 import React from 'react';
 import { StyleSheet, Text, TextInput, View, Button , Alert} from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { setItem as setToken, removeItem as removeToken, getItem as getToken} from '../storage';
+// import { setItem as setToken, removeItem as removeToken, getItem as getToken} from '../storage';
 const API_URL = 'https://myworktimetracker.herokuapp.com'
 
 
@@ -21,6 +21,17 @@ export default class LoginView extends React.Component {
         isLogin:false,
         userId:null
       }
+    }
+
+    async setItem(value) {
+      
+    try {
+      return AsyncStorage.setItem(value, JSON.stringify(value));
+      
+  } catch (e) {
+      console.log(e)
+      
+  }
     }
   
    
@@ -64,6 +75,7 @@ export default class LoginView extends React.Component {
   
             await setItem(jsonRes[0].userName)
             await setItem(jsonRes[0].userId)
+          
             // await AsyncStorage.setItem('userPassword', JSON.stringify(jsonRes[0].user));
             // let name = await AsyncStorage.getItem('userName')
             
