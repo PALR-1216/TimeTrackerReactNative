@@ -1,4 +1,4 @@
-import React, {createContext, useState} from 'react';
+import React, {createContext, useReducer, useState} from 'react';
 // import BASE_URL from '../src/config'
 import AsyncStorage from '@react-native-async-storage/async-storage';
 const API_URL = 'https://myworktimetracker.herokuapp.com'
@@ -11,6 +11,7 @@ export const AuthProvider = ({children}) =>{
   const [isLoading, setLoading] = useState(false);
   const [userInfo, setUserInfo] = useState({});
   const [userId, setUserId] = useState({})
+  const [userName, setUserName] = useState('')
 
 
   const Login = (userName, password) => {
@@ -43,16 +44,17 @@ export const AuthProvider = ({children}) =>{
            usersOvertime:jsonRes[i].usersOvertime
          }
        }
-      //  console.log(obj)
-       AsyncStorage.setItem('userInfo', JSON.stringify(jsonRes))
+       console.log(obj)
+      //  AsyncStorage.setItem('userInfo', JSON.stringify(jsonRes))
        AsyncStorage.setItem('userId', JSON.stringify(obj.id))
+       AsyncStorage.setItem('userName', obj.userName)
        setUserInfo(obj)
 
        
        setLoading(false)
 
      }catch(e) {
-       console.log(e)
+       console.log(e.message)
        setLoading(false)
      }
    })
@@ -65,12 +67,13 @@ export const AuthProvider = ({children}) =>{
       setLoading(true)
       AsyncStorage.removeItem('userInfo')
       AsyncStorage.removeItem('userId')
+      AsyncStorage.removeItem('userName')
       setUserInfo({})
       setLoading(false)
       console.log("User has been logged off")
       
     } catch (error) {
-      console.log(error)
+      console.log(error.message)
       
     }
   }
@@ -79,12 +82,10 @@ export const AuthProvider = ({children}) =>{
   const CheckIfUserIsLoggedIn = async() =>{
     try {
       const jsonValue = await AsyncStorage.getItem('userId')
-      const UserData = await AsyncStorage.getItem('userInfo')
-     
-     
-      // setUserInfo(UserData)
+      const name = await AsyncStorage.getItem('userName')
       setUserId(jsonValue)
-
+      setUserName(name)
+      
       // return jsonValue != null ? JSON.parse(jsonValue) : null
     } catch(e) {
       // read error
@@ -98,6 +99,7 @@ export const AuthProvider = ({children}) =>{
       isLoading,
       userInfo,
       userId,
+      userName,
       Login,
       LogOut,
       CheckIfUserIsLoggedIn
