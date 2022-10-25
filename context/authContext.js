@@ -57,9 +57,19 @@ export const AuthProvider = ({children}) =>{
   }
 
   const LogOut = () =>{
-    setLoading(true)
     //logout function in api in my website
-
+    try {
+      setLoading(true)
+      AsyncStorage.removeItem('userInfo')
+      setUserInfo({})
+      setLoading(false)
+      console.log("User has been logged off")
+      
+    } catch (error) {
+      console.log(error)
+      
+    }
+   
   }
 
 
@@ -67,7 +77,9 @@ export const AuthProvider = ({children}) =>{
     <AuthContext.Provider  value={{
       isLoading,
       userInfo,
-      Login
+      Login,
+      LogOut
+      
       
     }} >{children}</AuthContext.Provider>
   )
