@@ -11,6 +11,7 @@ const HomePageView = () =>{
     <View style={styles.container}>
     <Spinner visible={isLoading}/>
     <Text>Welcome user {userInfo.userName}</Text>
+    <Text>Users Email {userInfo.userEmail}</Text>
     <Button title="LogOut" color="red" onPress={LogOut}/>
     </View>
   )

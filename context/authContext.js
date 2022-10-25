@@ -10,6 +10,7 @@ export const AuthProvider = ({children}) =>{
 
   const [isLoading, setLoading] = useState(false);
   const [userInfo, setUserInfo] = useState({});
+  const [userId, setUserId] = useState({})
 
 
   const Login = (userName, password) => {
@@ -43,8 +44,10 @@ export const AuthProvider = ({children}) =>{
          }
        }
       //  console.log(obj)
-       AsyncStorage.setItem('userInfo', JSON.stringify(obj))
+       AsyncStorage.setItem('userInfo', JSON.stringify(jsonRes))
+       AsyncStorage.setItem('userId', JSON.stringify(obj.id))
        setUserInfo(obj)
+
        
        setLoading(false)
 
@@ -61,6 +64,7 @@ export const AuthProvider = ({children}) =>{
     try {
       setLoading(true)
       AsyncStorage.removeItem('userInfo')
+      AsyncStorage.removeItem('userId')
       setUserInfo({})
       setLoading(false)
       console.log("User has been logged off")
@@ -69,16 +73,34 @@ export const AuthProvider = ({children}) =>{
       console.log(error)
       
     }
-   
   }
+
+
+  const CheckIfUserIsLoggedIn = async() =>{
+    try {
+      const jsonValue = await AsyncStorage.getItem('userId')
+      const UserData = await AsyncStorage.getItem('userInfo')
+     
+     
+      // setUserInfo(UserData)
+      setUserId(jsonValue)
+
+      // return jsonValue != null ? JSON.parse(jsonValue) : null
+    } catch(e) {
+      // read error
+    }
+  }
+  
 
 
   return(
     <AuthContext.Provider  value={{
       isLoading,
       userInfo,
+      userId,
       Login,
-      LogOut
+      LogOut,
+      CheckIfUserIsLoggedIn
       
       
     }} >{children}</AuthContext.Provider>
