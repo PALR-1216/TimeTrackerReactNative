@@ -7,43 +7,7 @@ import {AuthProvider} from './context/authContext'
 
 
 
-<<<<<<< Updated upstream
 // or any pure javascript modules available in npm
-=======
-async function getItems(Item) {
-  try {
-    const value = await AsyncStorage.getItem(Item)
-    if(value !== null ) {
-        return value ? JSON.parse(value) : null;
-    }
-
-}catch(e) {
-    console.log(e)
-}
-}
-
-
-export default class App extends React.Component{
-  constructor(props) {
-    super(props)
-
-    this.state = {
-      userId:null,
-      userName:getItems('userName')
-    }
-  }
-
-
-
- render() {
-
-    return(
-      <SafeAreaView style={styles.container}>
-        <Text>{this.state.userName}</Text>
-        {/* <LoginView/> */}
-      </SafeAreaView>
-    )
->>>>>>> Stashed changes
 
 export default function App() {
   
