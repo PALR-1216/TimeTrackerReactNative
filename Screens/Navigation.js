@@ -14,7 +14,7 @@ const Stack = createNativeStackNavigator();
 
 const Navigation =  () =>{
 
-  const {userInfo, userId, CheckIfUserIsLoggedIn } = useContext(AuthContext)
+  const { userName, userId, CheckIfUserIsLoggedIn } = useContext(AuthContext)
   CheckIfUserIsLoggedIn()
   console.log(userId)
 
@@ -27,7 +27,7 @@ const Navigation =  () =>{
     
     {userId ? (
 
-      <Stack.Screen name='Home' component={HomePageView} options={{headerShown:false}}/>
+      <Stack.Screen name='Home' component={HomePageView} options={{title: `Welcome ${userName}`}} />
     ) : (
 
       <Stack.Screen name='Login' component={LoginView} options={{headerShown:false}}/>

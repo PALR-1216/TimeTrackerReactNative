@@ -1,20 +1,33 @@
 import {React, useContext} from 'react';
-import {Text, View, StyleSheet, Button} from 'react-native';
+import {Text, View, StyleSheet, Button, StatusBar, FlatList, SafeAreaView, Dimensions} from 'react-native';
 import {AuthContext} from '../context/authContext';
 import Spinner from 'react-native-loading-spinner-overlay';
+import { FlashList } from '@shopify/flash-list';
 
 
 
 const HomePageView = () =>{
-  const {userInfo, userName, isLoading, LogOut} = useContext(AuthContext);
+  const {userInfo, userName, userData, isLoading, LogOut} = useContext(AuthContext);
+  
   return(
-    <View style={styles.container}>
-    <Spinner visible={isLoading}/>
-    <Text>Welcome user {userName}</Text>
-    <Text>Users Email {userInfo.userEmail}</Text>
+    <SafeAreaView style={{ height: 800, width: Dimensions.get("screen").width, margin:10 }}>
+    <Spinner visible={isLoading}/>    
+    <MyList data={userData}/>
     <Button title="LogOut" color="red" onPress={LogOut}/>
-    </View>
+    </SafeAreaView>
   )
+}
+
+const MyList = ({data}) =>{
+  return (
+    <FlashList
+      data={data}
+      renderItem={({ item }) => <View>
+        <Text>{item.totalHour}</Text>
+      </View>}
+      estimatedItemSize={200}
+    />
+  );
 }
 
 const styles = StyleSheet.create({

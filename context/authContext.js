@@ -1,4 +1,5 @@
 import React, {createContext, useReducer, useState} from 'react';
+import axios from 'axios';
 // import BASE_URL from '../src/config'
 import AsyncStorage from '@react-native-async-storage/async-storage';
 const API_URL = 'https://myworktimetracker.herokuapp.com'
@@ -12,6 +13,7 @@ export const AuthProvider = ({children}) =>{
   const [userInfo, setUserInfo] = useState({});
   const [userId, setUserId] = useState({})
   const [userName, setUserName] = useState('')
+  const [userData, setUserData] = useState(null)
 
 
   const Login = (userName, password) => {
@@ -44,13 +46,11 @@ export const AuthProvider = ({children}) =>{
            usersOvertime:jsonRes[i].usersOvertime
          }
        }
-       console.log(obj)
+      //  console.log(obj)
       //  AsyncStorage.setItem('userInfo', JSON.stringify(jsonRes))
        AsyncStorage.setItem('userId', JSON.stringify(obj.id))
        AsyncStorage.setItem('userName', obj.userName)
-       setUserInfo(obj)
-
-       
+      //  setUserInfo(obj)
        setLoading(false)
 
      }catch(e) {
@@ -65,7 +65,7 @@ export const AuthProvider = ({children}) =>{
     //logout function in api in my website
     try {
       setLoading(true)
-      AsyncStorage.removeItem('userInfo')
+      // AsyncStorage.removeItem('userInfo')
       AsyncStorage.removeItem('userId')
       AsyncStorage.removeItem('userName')
       setUserInfo({})
@@ -85,11 +85,36 @@ export const AuthProvider = ({children}) =>{
       const name = await AsyncStorage.getItem('userName')
       setUserId(jsonValue)
       setUserName(name)
+      GetUserData(jsonValue)
       
       // return jsonValue != null ? JSON.parse(jsonValue) : null
     } catch(e) {
       // read error
     }
+  }
+
+
+  const GetUserData = async(id) =>{
+    let data = [];
+    
+   let response = fetch(`${API_URL}/api`)
+   await axios.get(`${API_URL}/api`).then((allData) =>{
+    let result = allData.data
+    for(i in result) {
+      let obj = {
+        id:result[i].hourId,
+        userId:result[i].userId,
+        totalHour:result[i].totalHour,
+        totalBreakTime:result[i].totalBreakTime,
+        TotalEarned:result[i].TotalEarned,
+
+      }
+      data.push(obj)
+
+    }
+   })
+   setUserData(data)
+  
   }
   
 
@@ -100,9 +125,11 @@ export const AuthProvider = ({children}) =>{
       userInfo,
       userId,
       userName,
+      userData,
       Login,
       LogOut,
-      CheckIfUserIsLoggedIn
+      CheckIfUserIsLoggedIn,
+
       
       
     }} >{children}</AuthContext.Provider>
