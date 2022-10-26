@@ -6,7 +6,7 @@ import Spinner from 'react-native-loading-spinner-overlay';
 
 
 const HomePageView = () =>{
-  const {userInfo, userName, isLoading, r} = useContext(AuthContext);
+  const {userInfo, userName, isLoading, LogOut} = useContext(AuthContext);
   return(
     <View style={styles.container}>
     <Spinner visible={isLoading}/>
