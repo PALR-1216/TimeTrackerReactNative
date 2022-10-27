@@ -5,12 +5,13 @@ import Spinner from 'react-native-loading-spinner-overlay';
 const LoginView = () => {
   const [userName, setUserName] = useState(null);
   const [password, setPassword] = useState(null);
-  const {isLoading, Login} = useContext(AuthContext)
+  const {isLoading ,Login} = useContext(AuthContext)
   return (
     <View style={styles.container}>
     <StatusBar hidden={true}/>
-
     <Spinner visible={isLoading}/>
+
+    <Text style={styles.Logo}>Work Tracker</Text>
       <TextInput
         placeholder="Enter userName"
         style={styles.input}
@@ -38,9 +39,8 @@ const LoginView = () => {
         else  {
           //Log user here
           Login(userName, password);
+          
         }
-
-
 
       }}/>
     </View>
@@ -62,6 +62,13 @@ const styles = StyleSheet.create({
     borderColor: 'black',
     marginBottom: 10,
   },
+
+  Logo:{
+    fontSize:40,
+    margin:45,
+    letterSpacing:2,
+    // fontWeight:'bold'
+  }
 });
 
 export default LoginView;

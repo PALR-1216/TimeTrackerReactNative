@@ -1,44 +1,76 @@
-import React, {useContext} from 'react';
+import React, { useEffect, useState, useCallback, useContext} from 'react';
 import {Text,View} from 'react-native';
 
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import * as SplashScreen from 'expo-splash-screen';
 import LoginView from './LoginView';
 import HomePageView from './HomePageView';
 import {AuthContext} from '../context/authContext'
 const Stack = createNativeStackNavigator();
 
 
+// SplashScreen.preventAutoHideAsync();
 
 
 const Navigation =  () =>{
 
   const { userName, userId, CheckIfUserIsLoggedIn } = useContext(AuthContext)
-  CheckIfUserIsLoggedIn()
-  console.log(userId)
-
-
+  const [appIsReady, setAppisReady] = useState(false)
   
-  return(
-    <NavigationContainer>
-    <Stack.Navigator>
+  CheckIfUserIsLoggedIn()
+  // console.log(userId)
+
+
+
+  if(userId) {
+    return(
+      <NavigationContainer>
+      <Stack.Navigator>
+
+        <Stack.Screen name='Home' component={HomePageView} options={{title: `Welcome ${userName}`, headerLargeTitle:true}} />
+      
+      </Stack.Navigator>
+      </NavigationContainer>
+  
+    );
+    
+  }
+
+  else{
+    return(
+      <NavigationContainer>
+        <Stack.Navigator>
+
+        <Stack.Screen name='Login' component={LoginView} options={{headerShown:false}}/>
+
+        </Stack.Navigator>
+      </NavigationContainer>
+    )
+  }
+  
+  
+  // return(
+  //   <NavigationContainer>
+  //   <Stack.Navigator>
+
 
     
-    {userId ? (
+  //   {userId ? (
 
-      <Stack.Screen name='Home' component={HomePageView} options={{title: `Welcome ${userName}`}} />
-    ) : (
+  //     <Stack.Screen name='Home' component={HomePageView} options={{title: `Welcome ${userName}`, headerLargeTitle:true}} />
+  //   ) : (
 
-      <Stack.Screen name='Login' component={LoginView} options={{headerShown:false}}/>
-    )}
+  //     <Stack.Screen name='Login' component={LoginView} options={{headerShown:false}}/>
+  //   )}
     
       
-    </Stack.Navigator>
+  //   </Stack.Navigator>
       
-    </NavigationContainer>
+  //   </NavigationContainer>
 
-  );
+  // );
 
 }
 

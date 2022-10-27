@@ -49,7 +49,7 @@ export const AuthProvider = ({children}) =>{
       //  console.log(obj)
       //  AsyncStorage.setItem('userInfo', JSON.stringify(jsonRes))
        AsyncStorage.setItem('userId', JSON.stringify(obj.id))
-       AsyncStorage.setItem('userName', obj.userName)
+       AsyncStorage.setItem('userName', `${obj.userName}`)
       //  setUserInfo(obj)
        setLoading(false)
 
@@ -85,7 +85,7 @@ export const AuthProvider = ({children}) =>{
       const name = await AsyncStorage.getItem('userName')
       setUserId(jsonValue)
       setUserName(name)
-      GetUserData(jsonValue)
+      // GetUserData(jsonValue)
       
       // return jsonValue != null ? JSON.parse(jsonValue) : null
     } catch(e) {
