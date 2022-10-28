@@ -4,17 +4,33 @@ import {Text, View, StyleSheet, Button, StatusBar, FlatList, SafeAreaView, Dimen
 import {AuthContext} from '../context/authContext';
 import Spinner from 'react-native-loading-spinner-overlay';
 import { FlashList } from '@shopify/flash-list';
+import { useState } from 'react';
+const API_URL = 'https://myworktimetracker.herokuapp.com'
 
 
 
 
 const HomePageView = () =>{
-  const {userInfo, userName, userId, userData, isLoading, LogOut} = useContext(AuthContext);
+  const {userName, userId, userData, isLoading, LogOut, FetchData} = useContext(AuthContext);
+  // const [hours, setHours] = useState([])
+  // fetch(`${API_URL}/api/getUserHours/${userId}`).then(res => res.json()).then(data => setHours(data))
 
+  FetchData(userId)
+  if(userData <= 0) {
+    return(
+      <SafeAreaView style={styles.container}>
+        <Text style={styles.NoDataMsg}>No Data to display</Text>
+
+      </SafeAreaView>
+      
+    )
+  }
 
   return(
     <SafeAreaView style={{ height: 400, margin:10 }}>
-    <Spinner visible={isLoading}/>    
+    <Spinner visible={isLoading}/>   
+
+     
     <MyList data={userData}/>
     
     
@@ -59,9 +75,13 @@ const styles = StyleSheet.create({
     backgroundColor:'#E5E4E2',
     borderRadius:5,
     height:35,
-    marginBottom:10
-   
+    marginBottom:10,
+    marginTop:10
+  },
 
+  NoDataMsg:{
+    fontSize:30,
+    fontWeight:'bold'
   }
 });
 

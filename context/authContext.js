@@ -114,19 +114,9 @@ export const AuthProvider = ({children}) =>{
   //I think i can make a post method to make it more secure, i can post the user id and get the data
 
   
-  const getData = async(id) => {
-    
-    try {
-      let response = await fetch(`${API_URL}/api/getUserHours/${id}`)
-      let data = await response.json()
-      setUserData(data)
-      
-      
-      
-    } catch (error) {
-      console.error(error)
-      
-    }
+  const FetchData = (id) =>{
+    fetch(`${API_URL}/api/getUserHours/${id}`).then(res => res.json()).then(data => setUserData(data))
+
   }
 
 
@@ -143,7 +133,7 @@ export const AuthProvider = ({children}) =>{
       Login,
       LogOut,
       CheckIfUserIsLoggedIn,
-      getData
+      FetchData
       
       
 
