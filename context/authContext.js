@@ -96,8 +96,6 @@ export const AuthProvider = ({children}) =>{
       const name = await AsyncStorage.getItem('userName')
       setUserId(jsonValue)
       setUserName(name)
-      // await getData(jsonValue)
-      
       
       // return jsonValue != null ? JSON.parse(jsonValue) : null
     } catch(e) {
@@ -142,10 +140,10 @@ export const AuthProvider = ({children}) =>{
       userId,
       userName,
       userData,
-      error,
       Login,
       LogOut,
       CheckIfUserIsLoggedIn,
+      getData
       
       
 

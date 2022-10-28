@@ -11,15 +11,11 @@ import { FlashList } from '@shopify/flash-list';
 const HomePageView = () =>{
   const {userInfo, userName, userId, userData, isLoading, LogOut} = useContext(AuthContext);
 
-  // useEffect(() =>{
-  //   getData(userId)
-
-  // })
 
   return(
     <SafeAreaView style={{ height: 400, margin:10 }}>
     <Spinner visible={isLoading}/>    
-    {/* <MyList data={userData}/> */}
+    <MyList data={userData}/>
     
     
     <Button title="LogOut" color="red"  onPress={LogOut}/>

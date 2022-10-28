@@ -8,7 +8,7 @@ import Spinner from 'react-native-loading-spinner-overlay';
 const LoginView = () => {
   const [userName, setUserName] = useState(null);
   const [password, setPassword] = useState(null);
-  const {isLoading ,Login, error} = useContext(AuthContext)
+  const {isLoading ,Login} = useContext(AuthContext)
   return (
    
     <KeyboardAvoidingView  behavior={Platform.OS === "ios" ? "padding" : "height"} style={styles.container}>
