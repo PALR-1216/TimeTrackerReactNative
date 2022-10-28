@@ -29,7 +29,8 @@ const Navigation =  () =>{
       <NavigationContainer>
       <Stack.Navigator>
 
-        <Stack.Screen name='Home' component={HomePageView} options={{title: `Welcome ${userName}`, headerLargeTitle:true}} />
+        <Stack.Screen name='Home' component={HomePageView} options={{title: `Welcome user ${userName}`, headerLargeTitle:true}} />
+        
       
       </Stack.Navigator>
       </NavigationContainer>

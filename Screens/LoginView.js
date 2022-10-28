@@ -1,5 +1,6 @@
 import { React, useState , useContext} from 'react';
-import { Text, View, StyleSheet, TextInput, Button,Alert , StatusBar} from 'react-native';
+import { Text, View, StyleSheet, TextInput, Button,Alert , StatusBar, KeyboardAvoidingView} from 'react-native';
+import LottieView from 'lottie-react-native';
 import {AuthContext} from '../context/authContext'
 import Spinner from 'react-native-loading-spinner-overlay';
 const LoginView = () => {
@@ -7,10 +8,15 @@ const LoginView = () => {
   const [password, setPassword] = useState(null);
   const {isLoading ,Login} = useContext(AuthContext)
   return (
-    <View style={styles.container}>
+    <KeyboardAvoidingView  behavior={Platform.OS === "ios" ? "padding" : "height"} style={styles.container}>
     <StatusBar hidden={true}/>
     <Spinner visible={isLoading}/>
-
+    <LottieView
+    autoPlay
+    style={{width:200, height:200}}
+    source={require('../assets/Lottie/78969-money.json')}
+    
+    />
     <Text style={styles.Logo}>Work Tracker</Text>
       <TextInput
         placeholder="Enter userName"
@@ -43,7 +49,7 @@ const LoginView = () => {
         }
 
       }}/>
-    </View>
+    </KeyboardAvoidingView>
   );
 };
 

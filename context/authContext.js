@@ -46,7 +46,7 @@ export const AuthProvider = ({children}) =>{
            usersOvertime:jsonRes[i].usersOvertime
          }
        }
-      //  console.log(obj)
+       console.log(obj)
       //  AsyncStorage.setItem('userInfo', JSON.stringify(jsonRes))
        AsyncStorage.setItem('userId', JSON.stringify(obj.id))
        AsyncStorage.setItem('userName', `${obj.userName}`)
