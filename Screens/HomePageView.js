@@ -1,5 +1,5 @@
 import {React, useContext, useEffect} from 'react';
-import {Text, View, StyleSheet, Button, StatusBar, FlatList, SafeAreaView, Dimensions} from 'react-native';
+import {Text, View, StyleSheet, Button, StatusBar, FlatList, SafeAreaView, Dimensions, TouchableOpacity, Image, Alert } from 'react-native';
 
 import {AuthContext} from '../context/authContext';
 import Spinner from 'react-native-loading-spinner-overlay';
@@ -28,11 +28,15 @@ const HomePageView = () =>{
   }
 
   return(
-    <SafeAreaView style={{ height: 400, margin:10 }}>
+    <SafeAreaView style={{ height: Dimensions.get('screen').height, margin:10 }}>
     <Spinner visible={isLoading}/>   
 
-     
     <MyList data={userData}/>
+    
+    <TouchableOpacity style={styles.floatingButton} onPress={() => Alert.alert("Pressed")}>
+      <Image style={styles.floatinButtonImage}  source={{uri:'https://cdn-icons-png.flaticon.com/512/1828/1828817.png'}}/>
+      
+    </TouchableOpacity>
     
     
     {/* <Button title="LogOut" color="red"  onPress={LogOut}/> */}
@@ -49,6 +53,8 @@ const MyList = ({data}) =>{
         <View style={styles.listRow}>
             <Text>Hours </Text>
             <Text>{item.totalHour}</Text>
+           
+
         </View>
       </View>
       
@@ -75,17 +81,16 @@ const styles = StyleSheet.create({
   },
 
   listRow:{
-     
-   
+    flexDirection:'row',
+    flexWrap:'wrap',
     padding:5,
     width:'100%',
     // backgroundColor:'#E5E4E2',
     backgroundColor:'white',
     borderRadius:10,
     height:70,
-    marginBottom:10,
-    marginTop:10,
-    justifyContent:'center',
+    marginTop:5,
+    // justifyContent:'center',
     shadowOpacity:0.08,
     //for ios
     shadowOffset:{
@@ -94,15 +99,31 @@ const styles = StyleSheet.create({
     },
     shadowRadius:10,
     //for android
-    elevation:5
+    elevation:5,
+    paddingTop:30
   },
 
   listContainer:{
-    paddingTop:20,
-    alignItems:'center'
-   
+    paddingTop:10,
+    
  
   },
+
+  floatingButton:{
+    position:'absolute',
+    width:50,
+    height:50,
+    alignItems:'center',
+    justifyContent:'center',
+    right:30,
+    bottom:80
+  },
+
+  floatinButtonImage:{
+    resizeMode:'contain',
+    width:60,
+    height:60 
+ },
 
   NoDataMsg:{
     fontSize:30,
