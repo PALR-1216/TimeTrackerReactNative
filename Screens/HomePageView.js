@@ -20,6 +20,7 @@ const HomePageView = () =>{
     return(
       <SafeAreaView style={styles.container}>
         <Text style={styles.NoDataMsg}>No Data to display</Text>
+        <Button title='LogOut' onPress={() => LogOut}/>
 
       </SafeAreaView>
       
@@ -34,7 +35,7 @@ const HomePageView = () =>{
     <MyList data={userData}/>
     
     
-    <Button title="LogOut" color="red"  onPress={LogOut}/>
+    {/* <Button title="LogOut" color="red"  onPress={LogOut}/> */}
     </SafeAreaView>
   )
 }
@@ -43,10 +44,15 @@ const MyList = ({data}) =>{
   return (
     <FlatList
       data={data}
-      renderItem={({ item }) => <View style={styles.listView}>
-          <Text>Hours </Text>
-          <Text>{item.totalHour}</Text>
-      </View>}
+      renderItem={({ item }) => 
+      <View style={styles.listContainer}>
+        <View style={styles.listRow}>
+            <Text>Hours </Text>
+            <Text>{item.totalHour}</Text>
+        </View>
+      </View>
+      
+      }
       estimatedItemSize={200}
     />
   );
@@ -68,15 +74,34 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
 
-  listView:{
-    flexDirection:'row',
-    flexWrap:'wrap',
+  listRow:{
+     
+   
     padding:5,
-    backgroundColor:'#E5E4E2',
-    borderRadius:5,
-    height:35,
+    width:'100%',
+    // backgroundColor:'#E5E4E2',
+    backgroundColor:'white',
+    borderRadius:10,
+    height:70,
     marginBottom:10,
-    marginTop:10
+    marginTop:10,
+    justifyContent:'center',
+    shadowOpacity:0.08,
+    //for ios
+    shadowOffset:{
+      width:0,
+      height:20
+    },
+    shadowRadius:10,
+    //for android
+    elevation:5
+  },
+
+  listContainer:{
+    paddingTop:20,
+    alignItems:'center'
+   
+ 
   },
 
   NoDataMsg:{

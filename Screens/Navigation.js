@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useCallback, useContext} from 'react';
-import {Text,View} from 'react-native';
+import {Button, Text,View} from 'react-native';
 
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
@@ -11,12 +11,10 @@ import {AuthContext} from '../context/authContext'
 const Stack = createNativeStackNavigator();
 
 
-// SplashScreen.preventAutoHideAsync();
-
 
 const Navigation =  () =>{
 
-  const { userName, userId, CheckIfUserIsLoggedIn } = useContext(AuthContext)
+  const { userName, userId, CheckIfUserIsLoggedIn , LogOut} = useContext(AuthContext)
   
   CheckIfUserIsLoggedIn()
   // console.log(userId)
@@ -28,7 +26,11 @@ const Navigation =  () =>{
       <NavigationContainer>
       <Stack.Navigator>
 
-        <Stack.Screen name='Home' component={HomePageView} options={{title: `Welcome user ${userName}`, headerLargeTitle:true}} />
+        <Stack.Screen name='Home' component={HomePageView} options={{title: `Welcome user ${userName}`, headerLargeTitle:true, headerRight:() => (
+          <View>
+            <Button title='LogOut' onPress={LogOut}/>
+          </View>
+        )}} />
         
       
       </Stack.Navigator>
