@@ -1,4 +1,5 @@
-import React, {createContext, useReducer, useState} from 'react';
+import React, {createContext, useState} from 'react';
+import { Alert } from 'react-native';
 import axios from 'axios';
 // import BASE_URL from '../src/config'
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -14,6 +15,7 @@ export const AuthProvider = ({children}) =>{
   const [userId, setUserId] = useState({})
   const [userName, setUserName] = useState('')
   const [userData, setUserData] = useState(null)
+  const [error, setError] = useState(false)
 
 
   const Login = (userName, password) => {
@@ -32,33 +34,42 @@ export const AuthProvider = ({children}) =>{
      body:JSON.stringify(payload)
    })
    .then(async res =>{
-     try{
-       let jsonRes = await res.json()
-       let obj;
 
-       for(i in jsonRes) {
-         obj ={
-           id:jsonRes[i].userId,
-           userName:jsonRes[i].userName,
-           userEmail:jsonRes[i].userEmail,
-           usersWage:jsonRes[i].usersWage,
-           usersDeduction:jsonRes[i].usersDeduction,
-           usersOvertime:jsonRes[i].usersOvertime
-         }
-       }
-       console.log(obj)
-      //  AsyncStorage.setItem('userInfo', JSON.stringify(jsonRes))
-       AsyncStorage.setItem('userId', JSON.stringify(obj.id))
-       AsyncStorage.setItem('userName', `${obj.userName}`)
-      //  setUserInfo(obj)
-       setLoading(false)
+    let jsonRes = await res.json()
+    if(jsonRes.Status === "Error") {
+      Alert.alert("User was not found")
+      setError(true)
+      setLoading(false)
+    }
 
-     }catch(e) {
-       console.log(e.message)
-       setLoading(false)
-     }
+    else if (jsonRes.Status === "Ok") {
+      try {
+        let data = jsonRes.User
+        console.log(data)
+
+        for(i in data) {
+          let obj ={
+            id:data[i].userId,
+            userName:data[i].userName,
+            userEmail:data[i].userEmail,
+            usersWage:data[i].usersWage,
+            usersDeduction:data[i].usersDeduction,
+            usersOvertime:data[i].usersOvertime
+          }
+          AsyncStorage.setItem('userId', `${obj.id}`)
+          AsyncStorage.setItem('userName', `${obj.userName}`)
+          setLoading(false)
+        }
+
+        
+        
+      } catch (error) {
+        console.log(error)
+        setLoading(false)
+        
+      }
+    }
    })
-
   }
 
   const LogOut = () =>{
@@ -101,15 +112,17 @@ export const AuthProvider = ({children}) =>{
   //but for now just use the userId to test the Api
   //example baseUrl/api/getUserHours/token=token here
   //validate the token and verify its data
-
+  
+  //I think i can make a post method to make it more secure, i can post the user id and get the data
 
   
-  async function getData(id) {
+  const getData = async(id) => {
     
     try {
       let response = await fetch(`${API_URL}/api/getUserHours/${id}`)
       let data = await response.json()
       setUserData(data)
+      
       
       
     } catch (error) {
@@ -129,9 +142,12 @@ export const AuthProvider = ({children}) =>{
       userId,
       userName,
       userData,
+      error,
       Login,
       LogOut,
       CheckIfUserIsLoggedIn,
+      
+      
 
       
       

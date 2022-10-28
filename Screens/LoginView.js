@@ -3,11 +3,14 @@ import { Text, View, StyleSheet, TextInput, Button,Alert , StatusBar, KeyboardAv
 import LottieView from 'lottie-react-native';
 import {AuthContext} from '../context/authContext'
 import Spinner from 'react-native-loading-spinner-overlay';
+
+
 const LoginView = () => {
   const [userName, setUserName] = useState(null);
   const [password, setPassword] = useState(null);
-  const {isLoading ,Login} = useContext(AuthContext)
+  const {isLoading ,Login, error} = useContext(AuthContext)
   return (
+   
     <KeyboardAvoidingView  behavior={Platform.OS === "ios" ? "padding" : "height"} style={styles.container}>
     <StatusBar hidden={true}/>
     <Spinner visible={isLoading}/>
@@ -32,7 +35,7 @@ const LoginView = () => {
         value={password}
         onChangeText={(pass) => setPassword(pass)}
       />
-      <Button title="Login" style={styles.input}  onPress={() => {
+      <Button title="Login" style={styles.logInBtn}  onPress={() => {
 
         if(!userName) {
           Alert.alert("Please enter credentials")
@@ -41,13 +44,14 @@ const LoginView = () => {
         else if(!password) {
           Alert.alert("Please enter credentials")
         }
-
+       
         else  {
           //Log user here
           Login(userName, password);
-          
         }
 
+        
+        
       }}/>
     </KeyboardAvoidingView>
   );

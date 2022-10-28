@@ -17,7 +17,6 @@ const Stack = createNativeStackNavigator();
 const Navigation =  () =>{
 
   const { userName, userId, CheckIfUserIsLoggedIn } = useContext(AuthContext)
-  const [appIsReady, setAppisReady] = useState(false)
   
   CheckIfUserIsLoggedIn()
   // console.log(userId)

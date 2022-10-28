@@ -1,21 +1,28 @@
-import {React, useContext} from 'react';
+import {React, useContext, useEffect} from 'react';
 import {Text, View, StyleSheet, Button, StatusBar, FlatList, SafeAreaView, Dimensions} from 'react-native';
+
 import {AuthContext} from '../context/authContext';
 import Spinner from 'react-native-loading-spinner-overlay';
 import { FlashList } from '@shopify/flash-list';
 
 
 
+
 const HomePageView = () =>{
-  const {userInfo, userName, userData, isLoading, LogOut} = useContext(AuthContext);
-  
+  const {userInfo, userName, userId, userData, isLoading, LogOut} = useContext(AuthContext);
+
+  // useEffect(() =>{
+  //   getData(userId)
+
+  // })
+
   return(
     <SafeAreaView style={{ height: 400, margin:10 }}>
     <Spinner visible={isLoading}/>    
     {/* <MyList data={userData}/> */}
     
     
-    <Button title="LogOut" color="red" onPress={LogOut}/>
+    <Button title="LogOut" color="red"  onPress={LogOut}/>
     </SafeAreaView>
   )
 }
@@ -24,8 +31,9 @@ const MyList = ({data}) =>{
   return (
     <FlatList
       data={data}
-      renderItem={({ item }) => <View>
-        <Text>{item.totalHour} - {item.totalBreakTime}</Text>
+      renderItem={({ item }) => <View style={styles.listView}>
+          <Text>Hours </Text>
+          <Text>{item.totalHour}</Text>
       </View>}
       estimatedItemSize={200}
     />
@@ -47,6 +55,18 @@ const styles = StyleSheet.create({
     borderColor: 'black',
     marginBottom: 10,
   },
+
+  listView:{
+    flexDirection:'row',
+    flexWrap:'wrap',
+    padding:5,
+    backgroundColor:'#E5E4E2',
+    borderRadius:5,
+    height:35,
+    marginBottom:10
+   
+
+  }
 });
 
 
