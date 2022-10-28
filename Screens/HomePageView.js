@@ -10,8 +10,9 @@ const HomePageView = () =>{
   const {userInfo, userName, userData, isLoading, LogOut} = useContext(AuthContext);
   
   return(
-    <SafeAreaView style={{ height: 800, margin:10 }}>
+    <SafeAreaView style={{ height: 400, margin:10 }}>
     <Spinner visible={isLoading}/>    
+    {/* <MyList data={userData}/> */}
     
     
     <Button title="LogOut" color="red" onPress={LogOut}/>
@@ -24,7 +25,7 @@ const MyList = ({data}) =>{
     <FlatList
       data={data}
       renderItem={({ item }) => <View>
-        <Text>{item.totalHour}</Text>
+        <Text>{item.totalHour} - {item.totalBreakTime}</Text>
       </View>}
       estimatedItemSize={200}
     />

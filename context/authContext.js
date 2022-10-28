@@ -85,7 +85,8 @@ export const AuthProvider = ({children}) =>{
       const name = await AsyncStorage.getItem('userName')
       setUserId(jsonValue)
       setUserName(name)
-      // GetUserData(jsonValue)
+      // await getData(jsonValue)
+      
       
       // return jsonValue != null ? JSON.parse(jsonValue) : null
     } catch(e) {
@@ -94,28 +95,30 @@ export const AuthProvider = ({children}) =>{
   }
 
 
-  const GetUserData = async(id) =>{
-    let data = [];
-    
-   let response = fetch(`${API_URL}/api`)
-   await axios.get(`${API_URL}/api`).then((allData) =>{
-    let result = allData.data
-    for(i in result) {
-      let obj = {
-        id:result[i].hourId,
-        userId:result[i].userId,
-        totalHour:result[i].totalHour,
-        totalBreakTime:result[i].totalBreakTime,
-        TotalEarned:result[i].TotalEarned,
+  //what info should i get from the user?
+  //get all hours from user with userId
+  //but to make it secure we need to make a jwt with the user id and username
+  //but for now just use the userId to test the Api
+  //example baseUrl/api/getUserHours/token=token here
+  //validate the token and verify its data
 
-      }
-      data.push(obj)
 
-    }
-   })
-   setUserData(data)
   
+  async function getData(id) {
+    
+    try {
+      let response = await fetch(`${API_URL}/api/getUserHours/${id}`)
+      let data = await response.json()
+      setUserData(data)
+      
+      
+    } catch (error) {
+      console.error(error)
+      
+    }
   }
+
+
   
 
 

@@ -63,15 +63,16 @@ const styles = StyleSheet.create({
     // marginTop:-220
   },
   input: {
-    width: 200,
+    width: 220,
     height: 44,
     padding: 10,
     borderWidth: 1,
     borderColor: 'black',
     marginBottom: 10,
     borderRadius:5
-  
   },
+
+
 
   Logo:{
     fontSize:40,
