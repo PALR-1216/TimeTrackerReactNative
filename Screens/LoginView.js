@@ -54,11 +54,13 @@ const LoginView = () => {
 };
 
 const styles = StyleSheet.create({
+  
   container: {
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
     backgroundColor: '#ecf0f1',
+    // marginTop:-220
   },
   input: {
     width: 200,
@@ -67,6 +69,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: 'black',
     marginBottom: 10,
+    borderRadius:5
   
   },
 
