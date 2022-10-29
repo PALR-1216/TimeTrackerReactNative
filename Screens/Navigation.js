@@ -15,15 +15,17 @@ const Stack = createNativeStackNavigator();
 const Drawer = createDrawerNavigator();
 
 
-function MyDrawer() {
+
+const DrawerRoutes = () =>{
   return (
     <Drawer.Navigator initialRouteName='Home'>
       <Drawer.Screen name='Home' component={HomePageView} />
-      <Drawer.Screen name="ProfileView" component={ProfileView} />
+      {/* <Drawer.Screen name="ProfileView" component={ProfileView} /> */}
      
     </Drawer.Navigator>
   );
 }
+
 
 const Navigation =  () =>{
 
@@ -37,19 +39,17 @@ const Navigation =  () =>{
   if(userId) {
     return(
       <NavigationContainer>
-      <Stack.Navigator>
+          <Drawer.Navigator initialRouteName='Home'>
+        <Drawer.Screen name='Home' component={HomePageView} options={{ title:`Home`, headerTitleStyle:{fontSize:23, fontWeight:'bold'}}} />
+        {/* <Drawer.Screen name="ProfileView" component={ProfileView} /> */}
       
-        <Stack.Screen name='Home' component={MyDrawer} options={{title: `Welcome user ${userName}`, headerLargeTitle:true, headerRight:() => (
-          <View>
-            <Button title='LogOut' onPress={LogOut}/>
-          </View>
-        )}} />
-        
-        
-      
-      </Stack.Navigator>
+      </Drawer.Navigator>
+
       </NavigationContainer>
-  
+      
+
+      
+     
     );
     
   }
@@ -87,6 +87,18 @@ const Navigation =  () =>{
   //   </NavigationContainer>
 
   // );
+
+
+  // <NavigationContainer>
+  // <Stack.Navigator>
+  
+  //   <Stack.Screen name='Home' component={DrawerRoutes} options={{}} />
+    
+    
+  
+  // </Stack.Navigator>
+  // </NavigationContainer>
+
 
 }
 

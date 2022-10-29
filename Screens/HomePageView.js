@@ -28,7 +28,7 @@ const HomePageView = () =>{
   }
 
   return(
-    <SafeAreaView style={{ height: Dimensions.get('screen').height, margin:10 }}>
+    <SafeAreaView style={{ margin:10 }}>
     <Spinner visible={isLoading}/>   
 
     <MyList data={userData}/>
@@ -105,7 +105,6 @@ const styles = StyleSheet.create({
 
   listContainer:{
     paddingTop:10,
-    
  
   },
 
@@ -116,7 +115,7 @@ const styles = StyleSheet.create({
     alignItems:'center',
     justifyContent:'center',
     right:30,
-    bottom:90
+    bottom:80
   },
 
   floatinButtonImage:{
