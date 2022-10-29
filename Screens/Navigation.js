@@ -3,14 +3,27 @@ import {Button, Text,View} from 'react-native';
 
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { createDrawerNavigator } from '@react-navigation/drawer';
+
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import * as SplashScreen from 'expo-splash-screen';
 import LoginView from './LoginView';
 import HomePageView from './HomePageView';
+import ProfileView from './ProfileView'
 import {AuthContext} from '../context/authContext'
 const Stack = createNativeStackNavigator();
+const Drawer = createDrawerNavigator();
 
 
+function MyDrawer() {
+  return (
+    <Drawer.Navigator initialRouteName='Home'>
+      <Drawer.Screen name='Home' component={HomePageView} />
+      <Drawer.Screen name="ProfileView" component={ProfileView} />
+     
+    </Drawer.Navigator>
+  );
+}
 
 const Navigation =  () =>{
 
@@ -25,12 +38,13 @@ const Navigation =  () =>{
     return(
       <NavigationContainer>
       <Stack.Navigator>
-
-        <Stack.Screen name='Home' component={HomePageView} options={{title: `Welcome user ${userName}`, headerLargeTitle:true, headerRight:() => (
+      
+        <Stack.Screen name='Home' component={MyDrawer} options={{title: `Welcome user ${userName}`, headerLargeTitle:true, headerRight:() => (
           <View>
             <Button title='LogOut' onPress={LogOut}/>
           </View>
         )}} />
+        
         
       
       </Stack.Navigator>
