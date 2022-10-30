@@ -33,7 +33,7 @@ const HomePageView = () =>{
   }
 
   return(
-    <SafeAreaView style={{ margin:10 }}>
+    <SafeAreaView style={{ margin:10 , height:Dimensions.get('screen').height - 100}}>
     <Spinner visible={isLoading}/>   
 
     <MyList data={userData}/>
@@ -110,6 +110,7 @@ const styles = StyleSheet.create({
 
   listContainer:{
     paddingTop:10,
+    // height:Dimensions.get('screen').height
  
   },
 
