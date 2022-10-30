@@ -20,7 +20,12 @@ const HomePageView = () =>{
     return(
       <SafeAreaView style={styles.container}>
         <Text style={styles.NoDataMsg}>No Data to display</Text>
-        <Button title='LogOut' onPress={() => LogOut}/>
+        {/* <Button title='LogOut' onPress={LogOut}/> */}
+        
+      <TouchableOpacity style={styles.floatingButton} onPress={() => Alert.alert("Pressed")}>
+      <Image style={styles.floatinButtonImage}  source={{uri:'https://cdn-icons-png.flaticon.com/512/1828/1828817.png'}}/>
+      
+    </TouchableOpacity>
 
       </SafeAreaView>
       
@@ -115,7 +120,7 @@ const styles = StyleSheet.create({
     alignItems:'center',
     justifyContent:'center',
     right:30,
-    bottom:80
+    bottom:60
   },
 
   floatinButtonImage:{

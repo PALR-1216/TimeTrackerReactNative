@@ -16,6 +16,7 @@ export const AuthProvider = ({children}) =>{
   const [userName, setUserName] = useState('')
   const [userData, setUserData] = useState(null)
   const [error, setError] = useState(false)
+  const [userEmail, setUserEmail] = useState('')
 
 
   const Login = (userName, password) => {
@@ -58,6 +59,7 @@ export const AuthProvider = ({children}) =>{
           }
           AsyncStorage.setItem('userId', `${obj.id}`)
           AsyncStorage.setItem('userName', `${obj.userName}`)
+          AsyncStorage.setItem('userEmail', `${obj.userEmail}`);
           setLoading(false)
         }
 
@@ -79,6 +81,7 @@ export const AuthProvider = ({children}) =>{
       // AsyncStorage.removeItem('userInfo')
       AsyncStorage.removeItem('userId')
       AsyncStorage.removeItem('userName')
+      AsyncStorage.removeItem('userEmail')
       setUserInfo({})
       setLoading(false)
       console.log("User has been logged off")
@@ -94,8 +97,10 @@ export const AuthProvider = ({children}) =>{
     try {
       const jsonValue = await AsyncStorage.getItem('userId')
       const name = await AsyncStorage.getItem('userName')
+      const email = await AsyncStorage.getItem('userEmail');
       setUserId(jsonValue)
       setUserName(name)
+      setUserEmail(email)
       
       // return jsonValue != null ? JSON.parse(jsonValue) : null
     } catch(e) {
@@ -129,6 +134,7 @@ export const AuthProvider = ({children}) =>{
       userInfo,
       userId,
       userName,
+      userEmail,
       userData,
       Login,
       LogOut,
