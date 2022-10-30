@@ -12,7 +12,7 @@ const CustomDrawer = (props) =>{
     const {userName, LogOut} = useContext(AuthContext);
     return(
         <View style={{flex:1}}>
-            <DrawerContentScrollView {...props} contentContainerStyle={{backgroundColor:'#8200d6'}}>
+            <DrawerContentScrollView {...props} contentContainerStyle={{backgroundColor:'#6287f8'}}>
                 {/* <Image source={{uri:'https://cdn-icons-png.flaticon.com/512/1077/1077012.png'}} style={{height:80, width:80, borderRadius:40, marginBottom:10, marginLeft:10}}/> */}
                 <View style={{flexDirection:'row', display:'flex', flexWrap:'wrap'}}>
                     
@@ -28,8 +28,8 @@ const CustomDrawer = (props) =>{
 
                 </View>
             </DrawerContentScrollView>
-            <View style={{padding:30, borderTopWidth:1, borderTopColor:'#ccc', paddingVertical:15}}>
-                <TouchableOpacity onPress={LogOut} style={{paddingVertical:15}}>
+            <View style={{padding:30, borderTopWidth:1, borderTopColor:'#ccc', paddingVertical:10}}>
+                <TouchableOpacity onPress={LogOut} style={{paddingVertical:10}}>
                     <View style={{flexDirection:'row', alignItems:'center', backgroundColor:'#fff', borderRadius:5, padding:7, width:'50%'}}>
                     <Feather name="log-out" size={24} color="black" />
                     

@@ -10,7 +10,9 @@ import LoginView from './LoginView';
 import HomePageView from './HomePageView';
 import ProfileView from './ProfileView'
 import CustomDrawer from '../Components/CustomDrawer';
+
 import { AuthContext } from '../context/authContext'
+
 const Stack = createNativeStackNavigator();
 const Drawer = createDrawerNavigator();
 
@@ -48,6 +50,7 @@ const Navigation = () => {
             )
           }} />
           {/* <Drawer.Screen name="ProfileView" component={ProfileView} /> */}
+         
 
         </Drawer.Navigator>
 
