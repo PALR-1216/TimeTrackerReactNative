@@ -61,6 +61,7 @@ export const AuthProvider = ({children}) =>{
           AsyncStorage.setItem('userName', `${obj.userName}`)
           AsyncStorage.setItem('userEmail', `${obj.userEmail}`);
           setLoading(false)
+          //make a auth token 
         }
 
         
@@ -120,8 +121,24 @@ export const AuthProvider = ({children}) =>{
 
   
   const FetchData = (id) =>{
-    fetch(`${API_URL}/api/getUserHours/${id}`).then(res => res.json()).then(data => setUserData(data))
+    // fetch(`${API_URL}/api/getUserHours/${id}`).then(res => res.json()).then(data => setUserData(data))
+    let payload = {
+      'id':Number(id)
+    }
 
+    const customHeaders = {
+      "Content-Type": "application/json",
+  }
+
+    fetch(`${API_URL}/api/GetUserHours`, {
+      method: "POST",
+      headers:customHeaders,
+      body: JSON.stringify(payload),
+  })
+      .then((response) => response.json())
+      .then((data) => {
+          setUserData(data.Hours)
+      });
   }
 
 
