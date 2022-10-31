@@ -1,12 +1,11 @@
 import { React, useContext, useEffect } from 'react';
 import { Text, View, StyleSheet, Button, StatusBar, FlatList, SafeAreaView, Dimensions, TouchableOpacity, Image, Alert } from 'react-native';
-
-
-
+import LottieView from 'lottie-react-native';
 import { AuthContext } from '../context/authContext';
 import Spinner from 'react-native-loading-spinner-overlay';
 import { FlashList } from '@shopify/flash-list';
 import { useState } from 'react';
+
 
 
 const API_URL = 'https://myworktimetracker.herokuapp.com'
@@ -25,10 +24,18 @@ const HomePageView = () => {
   if (userData <= 0) {
     return (
       <SafeAreaView style={styles.container}>
+
+        <LottieView
+          autoPlay
+          style={{ width: 400, height: 400 , paddingBottom:500}}
+          source={require('../assets/Lottie/106964-shake-a-empty-box.json')}
+
+        />
         <Text style={styles.NoDataMsg}>No Data to display</Text>
+
         {/* <Button title='LogOut' onPress={LogOut}/> */}
 
-        <TouchableOpacity style={styles.floatingButton} onPress={() => Alert.alert("pressed")}>
+        <TouchableOpacity style={styles.floatingButton} onPress={() => console.log("pressed")}>
           <Image style={styles.floatinButtonImage} source={{ uri: 'https://cdn-icons-png.flaticon.com/512/1828/1828817.png' }} />
 
         </TouchableOpacity>
@@ -55,6 +62,8 @@ const HomePageView = () => {
   )
 }
 
+
+
 const MyList = ({ data }) => {
   return (
     <FlatList
@@ -78,7 +87,7 @@ const MyList = ({ data }) => {
 
 
       }
-      estimatedItemSize={200}
+      estimatedItemSize={100}
     />
   );
 }
