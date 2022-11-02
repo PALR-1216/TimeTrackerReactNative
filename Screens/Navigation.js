@@ -18,17 +18,6 @@ const Drawer = createDrawerNavigator();
 
 
 
-const DrawerRoutes = () => {
-  return (
-    <Drawer.Navigator initialRouteName='Home'>
-      <Drawer.Screen name='Home' component={HomePageView} />
-      {/* <Drawer.Screen name="ProfileView" component={ProfileView} /> */}
-
-    </Drawer.Navigator>
-  );
-}
-
-
 const Navigation = () => {
 
   const { userName, userId, CheckIfUserIsLoggedIn, LogOut } = useContext(AuthContext)
@@ -46,7 +35,6 @@ const Navigation = () => {
           <Drawer.Screen name='Home' component={HomePageView} options={{
             title: `Home`, headerTitleStyle: { fontSize: 23, fontWeight: 'bold' }, drawerIcon: () => (
               <AntDesign name="home" size={25} color="black" />
-
             )
           }} />
 
@@ -55,10 +43,8 @@ const Navigation = () => {
       </NavigationContainer>
 
     );
-
   }
 
-  else {
     return (
       <NavigationContainer>
         <Stack.Navigator>
@@ -68,7 +54,7 @@ const Navigation = () => {
         </Stack.Navigator>
       </NavigationContainer>
     )
-  }
+
 
 
   // return(

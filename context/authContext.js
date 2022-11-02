@@ -41,11 +41,10 @@ export const AuthProvider = ({children}) =>{
     let jsonRes = await res.json()
     if(jsonRes.Status === "Error") {
       Alert.alert("User was not found")
-      setError(true)
       setLoading(false)
     }
 
-    else if (jsonRes.Status === "Ok") {
+    else{
       try {
         let data = jsonRes.User
         console.log(data)
@@ -53,7 +52,8 @@ export const AuthProvider = ({children}) =>{
 
         AsyncStorage.setItem('userId', `${data[0].userId}`)
         AsyncStorage.setItem('userName', `${data[0].userName}`)
-        AsyncStorage.setItem('userEmail', `${data[0].userEmail}`);      
+        AsyncStorage.setItem('userEmail', `${data[0].userEmail}`);    
+        setLoading(false)  
         
       } catch (error) {
         console.log(error)
@@ -67,9 +67,12 @@ export const AuthProvider = ({children}) =>{
   const LogOut = () =>{
     //logout function in api in my website
     try {
-      setLoading(true)
+      // setLoading(true)
       // AsyncStorage.removeItem('userInfo')
       AsyncStorage.removeItem('userId')
+      let id = AsyncStorage.getItem('userId')
+
+    
       AsyncStorage.removeItem('userName')
       AsyncStorage.removeItem('userEmail')
       setUserInfo({})

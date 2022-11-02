@@ -22,7 +22,7 @@ import { MaterialIcons } from '@expo/vector-icons';
 const HomePageView = () => {
   const { userName, userId, userData, myTotalHours, myTotalMoney, isLoading, LogOut, FetchData } = useContext(AuthContext);
   const [showComponent, setShowComponent] = useState(false)
-  const panelRef = useRef(null);
+
  
 
   // fetch(`${API_URL}/api/getUserHours/${userId}`).then(res => res.json()).then(data => setHours(data))
@@ -77,7 +77,7 @@ const HomePageView = () => {
 
         />
         <Text style={styles.NoDataMsg}>Fetching Data</Text>
-      
+        
         {/* <TouchableOpacity style={styles.floatingButton} onPress={() => console.log("pressed")}>
           <Image style={styles.floatinButtonImage} source={{ uri: 'https://cdn-icons-png.flaticon.com/512/1828/1828817.png' }} />
 
@@ -96,7 +96,7 @@ const HomePageView = () => {
         <Spinner visible={isLoading} />
 
         {/* Components */}
-        <MyHeader hours={myTotalHours} money={myTotalMoney}/>
+        {/* <MyHeader hours={myTotalHours} money={myTotalMoney}/> */}
         <MyList data={userData} />
          {/* Components */}
          {/* <Button title='LogOut' onPress={LogOut}/> */}
@@ -105,6 +105,7 @@ const HomePageView = () => {
           <Image style={styles.floatinButtonImage} source={{ uri: 'https://cdn-icons-png.flaticon.com/512/1828/1828817.png' }} />
 
         </TouchableOpacity>
+
 
 
         {/* <Button title="LogOut" color="red"  onPress={LogOut}/> */}
