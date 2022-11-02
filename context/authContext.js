@@ -17,6 +17,8 @@ export const AuthProvider = ({children}) =>{
   const [userData, setUserData] = useState(null)
   const [error, setError] = useState(false)
   const [userEmail, setUserEmail] = useState('')
+  const [myTotalHours, setTotalHours] = useState(null)
+  const [myTotalMoney, setTotalMoney] = useState(null)
 
 
   const Login = (userName, password) => {
@@ -47,24 +49,11 @@ export const AuthProvider = ({children}) =>{
       try {
         let data = jsonRes.User
         console.log(data)
+       
 
-        for(i in data) {
-          let obj ={
-            id:data[i].userId,
-            userName:data[i].userName,
-            userEmail:data[i].userEmail,
-            usersWage:data[i].usersWage,
-            usersDeduction:data[i].usersDeduction,
-            usersOvertime:data[i].usersOvertime
-          }
-          AsyncStorage.setItem('userId', `${obj.id}`)
-          AsyncStorage.setItem('userName', `${obj.userName}`)
-          AsyncStorage.setItem('userEmail', `${obj.userEmail}`);
-          setLoading(false)
-          //make a auth token 
-        }
-
-        
+        AsyncStorage.setItem('userId', `${data[0].userId}`)
+        AsyncStorage.setItem('userName', `${data[0].userName}`)
+        AsyncStorage.setItem('userEmail', `${data[0].userEmail}`);      
         
       } catch (error) {
         console.log(error)
@@ -138,6 +127,10 @@ export const AuthProvider = ({children}) =>{
       .then((response) => response.json())
       .then((data) => {
           setUserData(data.Hours)
+          
+          setTotalHours(data.TotalHours)
+          setTotalMoney(data.TotalMoney)
+          // console.log(`Total Hours ${myTotalHours} - Total Money ${myTotalMoney}`)
       });
   }
 
@@ -153,6 +146,8 @@ export const AuthProvider = ({children}) =>{
       userName,
       userEmail,
       userData,
+      myTotalHours,
+      myTotalMoney,
       Login,
       LogOut,
       CheckIfUserIsLoggedIn,

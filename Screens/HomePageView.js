@@ -1,11 +1,15 @@
-import { React, useContext, useEffect } from 'react';
+import { React, useContext, useEffect , useRef} from 'react';
 import { Text, View, StyleSheet, Button, StatusBar, FlatList, SafeAreaView, Dimensions, TouchableOpacity, Image, Alert } from 'react-native';
 import LottieView from 'lottie-react-native';
 import { AuthContext } from '../context/authContext';
 import Spinner from 'react-native-loading-spinner-overlay';
-import { FlashList } from '@shopify/flash-list';
+// import { FlashList } from '@shopify/flash-list';
 import { useState } from 'react';
 
+import MyBottomSheet from '../Components/MyBottomSheet';
+// import BottomSheet from 'react-native-simple-bottom-sheet';
+import MyHeader from '../Components/MyHeader';
+import MyList from '../Components/MyList';
 
 
 const API_URL = 'https://myworktimetracker.herokuapp.com'
@@ -16,22 +20,39 @@ import { MaterialIcons } from '@expo/vector-icons';
 
 
 const HomePageView = () => {
-  const { userName, userId, userData, isLoading, LogOut, FetchData } = useContext(AuthContext);
-  // const [hours, setHours] = useState([])
+  const { userName, userId, userData, myTotalHours, myTotalMoney, isLoading, LogOut, FetchData } = useContext(AuthContext);
+  const [showComponent, setShowComponent] = useState(false)
+  const panelRef = useRef(null);
+ 
+
   // fetch(`${API_URL}/api/getUserHours/${userId}`).then(res => res.json()).then(data => setHours(data))
 
   FetchData(userId)
-  if (userData <= 0) {
+
+  //Load a timeOut to wait 4 seconds in my app to wait for data to load
+
+
+  useEffect(() =>{
+    setInterval(() =>{
+      setShowComponent(true)
+
+    }, 4000)
+  }, [])
+
+
+  // if (userData <= 0) {
+  if (userData == 0) {  
     return (
       <SafeAreaView style={styles.container}>
 
         <LottieView
           autoPlay
-          style={{ width: 400, height: 400 , paddingBottom:500}}
+          style={{ width: 400, height: 400, paddingBottom: 500 }}
           source={require('../assets/Lottie/106964-shake-a-empty-box.json')}
 
         />
         <Text style={styles.NoDataMsg}>No Data to display</Text>
+        <Text style={{fontWeight:'bold'}}>Please enter Some Data</Text>
 
         {/* <Button title='LogOut' onPress={LogOut}/> */}
 
@@ -45,59 +66,66 @@ const HomePageView = () => {
     )
   }
 
-  return (
-    <SafeAreaView style={{ margin: 10, height: Dimensions.get('screen').height - 100 }}>
-      <Spinner visible={isLoading} />
+  else if(showComponent == false) {
+    return (
+      <SafeAreaView style={styles.container}>
 
-      <MyList data={userData} />
+        <LottieView
+          autoPlay
+          style={{ width: 400, height: 400, paddingBottom: 500 }}
+          source={require('../assets/Lottie/106964-shake-a-empty-box.json')}
 
-      <TouchableOpacity style={styles.floatingButton} onPress={() => Alert.alert("Pressed")}>
-        <Image style={styles.floatinButtonImage} source={{ uri: 'https://cdn-icons-png.flaticon.com/512/1828/1828817.png' }} />
+        />
+        <Text style={styles.NoDataMsg}>Fetching Data</Text>
+      
+        {/* <TouchableOpacity style={styles.floatingButton} onPress={() => console.log("pressed")}>
+          <Image style={styles.floatinButtonImage} source={{ uri: 'https://cdn-icons-png.flaticon.com/512/1828/1828817.png' }} />
 
-      </TouchableOpacity>
+        </TouchableOpacity> */}
+
+      </SafeAreaView>
+
+    )
+
+  }
+
+  else{
+   
+    return (
+      <SafeAreaView style={{ margin: 10, height: Dimensions.get('screen').height - 100 }}>
+        <Spinner visible={isLoading} />
+
+        {/* Components */}
+        <MyHeader hours={myTotalHours} money={myTotalMoney}/>
+        <MyList data={userData} />
+         {/* Components */}
+         {/* <Button title='LogOut' onPress={LogOut}/> */}
+
+        <TouchableOpacity style={styles.floatingButton} onPress={() => Alert.alert("Open modal")}>
+          <Image style={styles.floatinButtonImage} source={{ uri: 'https://cdn-icons-png.flaticon.com/512/1828/1828817.png' }} />
+
+        </TouchableOpacity>
 
 
-      {/* <Button title="LogOut" color="red"  onPress={LogOut}/> */}
-    </SafeAreaView>
-  )
+        {/* <Button title="LogOut" color="red"  onPress={LogOut}/> */}
+      </SafeAreaView>
+    )
+
+  }
+
 }
 
 
 
-const MyList = ({ data }) => {
-  return (
-    <FlatList
-      data={data}
-      renderItem={({ item }) =>
 
-        <View style={styles.listContainer}>
-          <View style={styles.listRow}>
-            <FontAwesome5 name="clock" size={24} color="grey" />
-            <Text style={{ fontWeight: 'bold', fontSize: 25 }}> {item.totalHour}</Text>
-
-            <View style={{ flexDirection: 'row', flexWrap: 'wrap', alignItems: 'center', marginLeft: 'auto', paddingRight: 30 }}>
-              <MaterialIcons name="attach-money" size={24} color="black" />
-              <Text style={{ fontWeight: 'bold', fontSize: 25 }}>{item.TotalEarned}</Text>
-
-            </View>
-          </View>
-
-        </View>
-
-
-
-      }
-      estimatedItemSize={100}
-    />
-  );
-}
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: '#ecf0f1',
+    // backgroundColor: '#ecf0f1',
+    backgroundColor:'#FEFBF6'
   },
   input: {
     width: 200,
@@ -106,41 +134,6 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: 'black',
     marginBottom: 10,
-  },
-
-  listRow: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    padding: 5,
-
-    width: '100%',
-    // backgroundColor:'#E5E4E2',
-    backgroundColor: 'white',
-    borderRadius: 10,
-    height: 70,
-    marginTop: 5,
-    // justifyContent:'center',
-    shadowOpacity: 0.08,
-    //for ios
-    shadowOffset: {
-      width: 0,
-      height: 20
-    },
-    shadowRadius: 10,
-    //for android
-    elevation: 5,
-    alignItems: 'center',
-    paddingTop: 25,
-    paddingLeft: 10
-
-  },
-
-  listContainer: {
-    paddingTop: 10,
-
-
-    // height:Dimensions.get('screen').height
-
   },
 
   floatingButton: {

@@ -21,6 +21,7 @@ const LoginView = () => {
     
     />
     <Text style={styles.Logo}>Work Tracker</Text>
+    
       <TextInput
         placeholder="Enter userName"
         style={styles.input}

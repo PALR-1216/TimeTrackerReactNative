@@ -36,7 +36,7 @@ const Navigation = () => {
   CheckIfUserIsLoggedIn()
   // console.log(userId)
 
-
+//TODO:Error on login user dosent open the homePage
 
   if (userId) {
     return (
@@ -49,15 +49,10 @@ const Navigation = () => {
 
             )
           }} />
-          {/* <Drawer.Screen name="ProfileView" component={ProfileView} /> */}
-         
 
         </Drawer.Navigator>
 
       </NavigationContainer>
-
-
-
 
     );
 
