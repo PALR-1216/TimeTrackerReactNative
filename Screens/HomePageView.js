@@ -36,7 +36,7 @@ const HomePageView = () => {
     setInterval(() =>{
       setShowComponent(true)
 
-    }, 4000)
+    }, 3500)
   }, [])
 
 
@@ -96,7 +96,7 @@ const HomePageView = () => {
         <Spinner visible={isLoading} />
 
         {/* Components */}
-        {/* <MyHeader hours={myTotalHours} money={myTotalMoney}/> */}
+        <MyHeader hours={myTotalHours} money={myTotalMoney}/>
         <MyList data={userData} />
          {/* Components */}
          {/* <Button title='LogOut' onPress={LogOut}/> */}

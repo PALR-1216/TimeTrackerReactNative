@@ -7,22 +7,15 @@ import Spinner from 'react-native-loading-spinner-overlay';
 import { useState } from 'react';
 import { FontAwesome5 } from '@expo/vector-icons';
 import { MaterialIcons } from '@expo/vector-icons';
+import { MaterialCommunityIcons } from '@expo/vector-icons'; 
 
 
 
 const MyHeader = ({ hours, money }) => {
     return (
-      <View style={{flexDirection:'row', flexWrap:'wrap', backgroundColor:'#FCF8E8',  paddingBottom:40}}>
-        <View style={{alignItems:'flex-start', flexDirection:'row'}}>
-        <FontAwesome5 name="clock" size={30} color="black" />
-          <Text style={{fontWeight:'bold', fontSize:24}}> Total Hours {hours}</Text>
-        </View>
-  
-        <View style={{alignItems:'flex-end', flex:1, flexDirection:'row', paddingLeft:20}}>
-        <MaterialIcons name="attach-money" size={25} color="black" />
-          <Text style={{fontWeight:'bold', fontSize:24}}>Total Money {money}</Text>
-        </View>
-  
+      <View style={{backgroundColor:'white', flex:.2, alignItems:'flex-start', justifyContent:'center', borderRadius:15}}>
+        <Text style={{fontWeight:'bold', marginLeft:10, fontSize:30}}>Total Money - <MaterialCommunityIcons name="cash" size={24} color="grey" />{money}</Text>
+        <Text style={{fontWeight:'bold', marginLeft:10, fontSize:30}}>Total Hours - <MaterialCommunityIcons name="clock-time-four-outline" size={24} color="grey" /> {hours}</Text>
       </View>
     )
 }
