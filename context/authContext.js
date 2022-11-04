@@ -19,6 +19,7 @@ export const AuthProvider = ({children}) =>{
   const [userEmail, setUserEmail] = useState('')
   const [myTotalHours, setTotalHours] = useState(null)
   const [myTotalMoney, setTotalMoney] = useState(null)
+  const [showAdd, setShowAdd] = useState(false)
 
 
   const Login = (userName, password) => {
@@ -140,7 +141,6 @@ export const AuthProvider = ({children}) =>{
 
   
 
-
   return(
     <AuthContext.Provider  value={{
       isLoading,
@@ -151,10 +151,12 @@ export const AuthProvider = ({children}) =>{
       userData,
       myTotalHours,
       myTotalMoney,
+      showAdd,
       Login,
       LogOut,
       CheckIfUserIsLoggedIn,
-      FetchData
+      FetchData,
+
       
       
 

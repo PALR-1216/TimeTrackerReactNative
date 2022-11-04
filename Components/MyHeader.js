@@ -21,4 +21,6 @@ const MyHeader = ({ hours, money }) => {
 }
   
 
-  export default MyHeader;
+
+
+export default MyHeader;

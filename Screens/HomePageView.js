@@ -5,9 +5,8 @@ import { AuthContext } from '../context/authContext';
 import Spinner from 'react-native-loading-spinner-overlay';
 // import { FlashList } from '@shopify/flash-list';
 import { useState } from 'react';
-
 import MyBottomSheet from '../Components/MyBottomSheet';
-// import BottomSheet from 'react-native-simple-bottom-sheet';
+import BottomSheet from 'react-native-simple-bottom-sheet';
 import MyHeader from '../Components/MyHeader';
 import MyList from '../Components/MyList';
 
@@ -16,14 +15,15 @@ const API_URL = 'https://myworktimetracker.herokuapp.com'
 
 import { FontAwesome5 } from '@expo/vector-icons';
 import { MaterialIcons } from '@expo/vector-icons';
+import { useNavigation } from '@react-navigation/native';
 
-
+// Navigation.navigate('Add')
 
 const HomePageView = () => {
   const { userName, userId, userData, myTotalHours, myTotalMoney, isLoading, LogOut, FetchData } = useContext(AuthContext);
   const [showComponent, setShowComponent] = useState(false)
-
- 
+  const Navigation = useNavigation()
+  const panelRef = useRef(null);
 
   // fetch(`${API_URL}/api/getUserHours/${userId}`).then(res => res.json()).then(data => setHours(data))
 
@@ -101,12 +101,22 @@ const HomePageView = () => {
          {/* Components */}
          {/* <Button title='LogOut' onPress={LogOut}/> */}
 
-        <TouchableOpacity style={styles.floatingButton} onPress={() => Alert.alert("Open modal")}>
+        <TouchableOpacity style={styles.floatingButton} onPress={() => panelRef.current.togglePanel()}>
           <Image style={styles.floatinButtonImage} source={{ uri: 'https://cdn-icons-png.flaticon.com/512/1828/1828817.png' }} />
 
         </TouchableOpacity>
 
 
+        <BottomSheet
+          ref={(ref) => (panelRef.current = ref)}
+          isOpen = {false}
+          sliderMaxHeight={Dimensions.get('window').height}
+          sliderMinHeight={0}>
+            {/* here put the component for ading the data */}
+          <MyBottomSheet/>
+        </BottomSheet>
+
+   
 
         {/* <Button title="LogOut" color="red"  onPress={LogOut}/> */}
       </SafeAreaView>
@@ -117,6 +127,10 @@ const HomePageView = () => {
 }
 
 
+
+const mySheet = ({show}) => {
+  
+}
 
 
 

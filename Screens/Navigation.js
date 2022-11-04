@@ -10,6 +10,7 @@ import LoginView from './LoginView';
 import HomePageView from './HomePageView';
 import ProfileView from './ProfileView'
 import CustomDrawer from '../Components/CustomDrawer';
+import AddHour from '../Screens/AddHourView';
 
 import { AuthContext } from '../context/authContext'
 
@@ -37,13 +38,17 @@ const Navigation = () => {
               <AntDesign name="home" size={25} color="black" />
             )
           }} />
+          
+            {/* <Drawer.Screen name='Add' component={AddHour}/> */}
 
         </Drawer.Navigator>
 
       </NavigationContainer>
-
     );
   }
+
+
+
 
     return (
       <NavigationContainer>
