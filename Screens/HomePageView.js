@@ -106,11 +106,10 @@ const HomePageView = () => {
 
         </TouchableOpacity>
 
-
         <BottomSheet
           ref={(ref) => (panelRef.current = ref)}
-          isOpen = {false}
-          sliderMaxHeight={Dimensions.get('window').height}
+          isOpen={false}
+          sliderMaxHeight={Dimensions.get('window').height - 100}
           sliderMinHeight={0}>
             {/* here put the component for ading the data */}
           <MyBottomSheet/>

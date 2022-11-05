@@ -5,6 +5,6 @@
   "minify": false,
   "urlRandomness": null,
   "https": false,
-  "scheme": "exp+snack-9a6b8de1-0144-489e-82d2-81cf6167287f",
+  "scheme": null,
   "devClient": false
 }
